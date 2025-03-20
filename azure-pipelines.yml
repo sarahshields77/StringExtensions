@@ -5,11 +5,15 @@ pool:
   name: MySelfHostedAgentPool
 
 steps:
+- checkout: self
+  clean: true
+
 - task: DeleteFiles@1
   displayName: 'Clean old builds'
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**/bin/**, **/obj/**'
+
 - task: UseDotNet@2
   displayName: 'Use .NET 8 SDK'
   inputs:
@@ -32,7 +36,7 @@ steps:
   displayName: 'Pack NuGet Package'
   inputs:
     command: 'pack'
-    packagesToPack: '**/StringExtensions.csproj'
+    packagesToPack: 'StringExtensions/StringExtensions.csproj'
     configuration: 'Release'
     arguments: '--output $(Build.ArtifactStagingDirectory)'
 
@@ -43,7 +47,6 @@ steps:
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: 'sshield9/StringExtensionsFeed'
-
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
