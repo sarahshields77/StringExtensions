@@ -23,6 +23,22 @@ steps:
 - script: dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)
   displayName: 'Publish Artifacts'
 
+- task: DotNetCoreCLI@2
+  displayName: 'Pack NuGet Package'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/StringExtensions.csproj'
+    configuration: 'Release'
+    outputDirectory: '$(Build.ArtifactStagingDirectory)'
+
+- task: NuGetCommand@2
+  displayName: 'Push NuGet Package to Azure Artifacts'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'StringExtensionsFeed'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
   inputs:
