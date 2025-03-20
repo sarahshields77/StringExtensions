@@ -25,7 +25,7 @@ steps:
 
 - script: |
     echo "Current Directory: $(Build.SourcesDirectory)"
-    ls -R $(Build.SourcesDirectory)
+    dir /s $(Build.SourcesDirectory)
   displayName: 'Debug: Check Directory Structure'
 
 - script: dotnet build $(Build.SourcesDirectory)/StringExtensions.csproj --configuration Release
