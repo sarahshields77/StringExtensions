@@ -25,7 +25,7 @@ steps:
 - script: dotnet test --configuration Release
   displayName: 'Run Tests'
 
-- script: dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)
+- script: dotnet publish StringConsumerApp/StringConsumerApp.csproj -c Release -o $(Build.ArtifactStagingDirectory)
   displayName: 'Publish Artifacts'
 
 - task: DotNetCoreCLI@2
