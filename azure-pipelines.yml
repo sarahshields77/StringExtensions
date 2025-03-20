@@ -23,20 +23,20 @@ steps:
 - checkout: self
   clean: true
   
-- script: dotnet build StringExtensions/StringExtensions.csproj --configuration Release
+- script: dotnet build $(Build.SourcesDirectory)/StringExtensions.csproj --configuration Release
   displayName: 'Build Solution'
 
 - script: dotnet test --configuration Release
   displayName: 'Run Tests'
 
-- script: dotnet publish StringExtensions/StringExtensions.csproj -c Release -o $(Build.ArtifactStagingDirectory)
+- script: dotnet publish $(Build.SourcesDirectory)/StringExtensions.csproj -c Release -o $(Build.ArtifactStagingDirectory)
   displayName: 'Publish Artifacts'
 
 - task: DotNetCoreCLI@2
   displayName: 'Pack NuGet Package'
   inputs:
     command: 'pack'
-    packagesToPack: 'StringExtensions/StringExtensions.csproj'
+    packagesToPack: '$(Build.SourcesDirectory)/StringExtensions.csproj'
     configuration: 'Release'
     arguments: '--output $(Build.ArtifactStagingDirectory)'
     nobuild: true
@@ -54,4 +54,5 @@ steps:
   inputs:
     pathToPublish: $(Build.ArtifactStagingDirectory)
     artifactName: 'drop'
+
 
