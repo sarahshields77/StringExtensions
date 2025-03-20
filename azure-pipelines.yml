@@ -14,7 +14,7 @@ steps:
 - script: dotnet restore
   displayName: 'Restore NuGet Packages'
 
-- script: dotnet build --configuration Release
+- script: dotnet build StringConsumerApp/StringConsumerApp.csproj --configuration Release
   displayName: 'Build Solution'
 
 - script: dotnet test --configuration Release
