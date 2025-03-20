@@ -28,7 +28,7 @@ steps:
     dir /s $(Build.SourcesDirectory)
   displayName: 'Debug: Check Directory Structure'
 
-- script: dotnet build $(Build.SourcesDirectory)/StringExtensions.csproj --configuration Release
+- script: dotnet build StringExtensions.sln --configuration Release
   displayName: 'Build Solution'
 
 - script: dotnet test --configuration Release
